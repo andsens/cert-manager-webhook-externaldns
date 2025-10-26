@@ -17,6 +17,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/rest"
+	apiv1alpha1 "sigs.k8s.io/external-dns/apis/v1alpha1"
 	"sigs.k8s.io/external-dns/endpoint"
 )
 
@@ -70,7 +71,7 @@ func (c *externalDNSProviderSolver) Present(ch *v1alpha1.ChallengeRequest) error
 	obj := unstructured.Unstructured{}
 	fqdn := ch.ResolvedFQDN
 
-	endpointSpec := endpoint.DNSEndpointSpec{}
+	endpointSpec := apiv1alpha1.DNSEndpointSpec{}
 
 	endpointSpec.Endpoints = append(endpointSpec.Endpoints, endpoint.NewEndpoint(fqdn, endpoint.RecordTypeTXT, ch.Key))
 	obj.SetName(fqdnToName(fqdn))
